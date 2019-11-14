@@ -1,0 +1,150 @@
+html, body {
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+#sil-anim-timeline {
+  height: 80px;
+  background: #3b3b3b;
+  box-sizing: border-box;
+  user-select: none;
+}
+#sil-anim-timeline .container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: stretch;
+  align-items: stretch;
+}
+
+#sil-anim-timeline .sat-controls {
+  flex: 0 1 auto;
+  padding: 4px 4px 2px 4px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+#sil-anim-timeline .sat-controls div {
+  text-align: center;
+}
+#sil-anim-timeline .sat-controls div:last-child {
+  text-align: right;
+}
+#sil-anim-timeline .sat-controls div:first-child {
+  text-align: left;
+}
+#sil-anim-timeline .sat-controls button {
+  background-color: #585858;
+  color: white;
+  border-width: 0;
+  margin: 0 2px;
+  background-size: contain;
+  background-position: center center;
+  text-indent: -1000em;
+  width: 18px;
+  height: 18px;
+  border-radius: 3px;
+}
+#sil-anim-timeline .sat-controls span, #sil-anim-timeline .sat-controls label {
+  color: white;
+  font-size: 10px;
+  font-family: sans-serif;
+  height: 18px;
+  padding: 2px;
+}
+#sil-anim-timeline .sat-controls label {
+  background: #585858;
+  border-radius: 2px;
+}
+#sil-anim-timeline .sat-controls label input {
+  background: transparent;
+  border-width: 0;
+  color: white;
+  width: 5ch;
+  font-size: 10px;
+  font-family: sans-serif;
+}
+#sil-anim-timeline .sat-controls button.sat-record {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><circle cx="10" cy="10" r="5" fill="white"/></svg>');
+}
+#sil-anim-timeline .sat-controls button.sat-play {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5,5 L15,10 L5,15" fill="white"/></svg>');
+}
+#sil-anim-timeline .sat-controls button[disabled] {
+  opacity: 0.3;
+}
+
+#sil-anim-timeline .sat-numbers {
+  flex: 0 1 auto;
+  position: relative;
+}
+#sil-anim-timeline .sat-numbers input {
+  -webkit-appearance: none;
+  width: 100%;
+  background: transparent;
+}
+#sil-anim-timeline .sat-numbers input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+}
+
+#sil-anim-timeline .sat-numbers input:focus {
+  outline: none;
+}
+#sil-anim-timeline .sat-numbers input::-moz-range-thumb {
+  opacity: 0;
+}
+
+#sil-anim-timeline .sat-numbers .thumb {
+  position: absolute;
+  height: 16px;
+  width: 20px;
+  border-radius: 3px;
+  border-width: 0;
+  background: #5376bf;
+  pointer-events: none;
+  color: white;
+  font-size: 10px;
+  font-family: sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 3px;
+}
+#sil-anim-timeline .sat-numbers .thumb::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  height: 100px;
+  border-left: 1px solid #5376bf;
+  top: 0;
+  z-index: -1;
+}
+#sil-anim-timeline .sat-numbers ul {
+  font-size: 10px;
+  font-family: sans-serif;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  pointer-events: none;
+  top: 5px;
+  color: #848484;
+  left: 3px;
+  right: 3px;
+}
+#sil-anim-timeline .sat-numbers ul li {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+#sil-anim-timeline .sat-keyframes {
+  flex: 1 1 auto;
+  background: #444444;
+}
