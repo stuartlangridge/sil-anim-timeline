@@ -1,0 +1,1 @@
+javascript:(function(){var SID='sil-anim-timeline-script'; var s=document.getElementById(SID); if (window.silAnimTimelineTerminate) window.silAnimTimelineTerminate();if (s) { s.remove(); } s=document.createElement('script');s.setAttribute('id',SID);s.src='URL/TO/sil-anim-timeline.js';document.querySelector('head').appendChild(s);})()
