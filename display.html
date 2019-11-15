@@ -46,7 +46,7 @@ $SVG
 
         Array.from(svg.querySelectorAll("[data-keyframes]")).forEach(el => {
             const bb = getBBox(el);
-            let earliests = {};
+            let allframesprops = {};
             Object.keys(el.dataset).forEach(attr => {
                 let parts = attr.match(/^keyframe-([0-9]+)(.+)$/);
                 if (parts) {
@@ -55,11 +55,24 @@ $SVG
                     let prop = parts[2].toLowerCase();
                     let value = parseInt(el.dataset[attr], 10) - bb[prop];
                     propdict[prop] = value;
-                    if (value < (earliests[prop] || 9999999)) { earliests[prop] = value; }
-                    tl.to(el, propdict, frame / 60);
+                    if (!allframesprops[frame]) allframesprops[frame] = {};
+                    allframesprops[frame][prop] = value;
+                    //tl.to(el, propdict, frame / 60);
                 }
             });
-            tl.set(el, earliests, 0);
+            let keyframes = Object.keys(allframesprops).map(n => parseInt(n, 10));
+            keyframes.sort((a, b) => a - b);
+            console.log(el.id, keyframes);
+            // set all props at 0 to the way the first frame is
+            tl.set(el, allframesprops[keyframes[0]], 0);
+            for (let fr=1; fr < keyframes.length; fr++) {
+                let fromfr = keyframes[fr-1];
+                let tofr = keyframes[fr];
+                let props = Object.assign({}, allframesprops[tofr]);
+                props.duration = (tofr - fromfr) / 60;
+                console.log(el.id, JSON.stringify(props), fromfr / 60);
+                tl.to(el, props, (fromfr / 60) );
+            }
         })
         return tl;
     }
