@@ -201,6 +201,21 @@ window.silAnimTimelineTerminate = (function() {
         });
     }
 
+    const deleteKeyframe = (frame, node_id) => {
+        let s = window.figma.getNodeById(node_id);
+        if (!s) { console.log("Deleting a keyframe for a non-existent node", node_id); return; }
+        let existing_keyframe_data = s.getSharedPluginData("silanimtimeline", "keyframe-data");
+        if (!existing_keyframe_data) {
+            // shouldn't happen
+            existing_keyframe_data = {}
+        } else {
+            existing_keyframe_data = JSON.parse(existing_keyframe_data);
+        }
+        delete existing_keyframe_data[frame];
+        s.setSharedPluginData("silanimtimeline", "keyframe-data", JSON.stringify(existing_keyframe_data));
+        selectionchange(); // to update the timeline
+    }
+
     const messageHandler = event => {
         if (event.data.action == "play-button") {
             playPressed();
@@ -208,6 +223,8 @@ window.silAnimTimelineTerminate = (function() {
             recordPressed(event.data.frame);
         } else if (event.data.action == "download-button") {
             downloadPressed();
+        } else if (event.data.action == "delete-keyframe") {
+            deleteKeyframe(event.data.frame, event.data.node_id);
         } else {
             console.log("unrecognised event in embed", event.data);
         }

@@ -95,7 +95,6 @@
         }
         let kf = document.createElement("button");
         kf.onclick = () => {
-            console.log("clicked frame", frame, "on node", figma_id);
             const ovl = document.querySelector(".sat-kf-button-overlay");
             ovl.dataset.frame = frame;
             ovl.dataset.node_id = figma_id;
@@ -112,6 +111,7 @@
             document.querySelector("#sil-anim-timeline .sat-keyframes").innerHTML = "";
         } else {
             document.querySelector("#sil-anim-timeline .sat-controls button.sat-record").disabled = false;
+            document.querySelector("#sil-anim-timeline .sat-keyframes").innerHTML = "";
             keyframed_nodes.forEach(kn => {
                 let row = document.createElement("div");
                 row.className = "row";
