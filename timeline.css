@@ -49,6 +49,11 @@ html, body {
   height: 18px;
   border-radius: 3px;
 }
+#sil-anim-timeline .sat-controls .sat-dl {
+  text-indent: 0;
+  width: auto;
+  font-size: 12px;
+}
 #sil-anim-timeline .sat-controls span, #sil-anim-timeline .sat-controls label {
   color: white;
   font-size: 10px;
@@ -147,4 +152,87 @@ html, body {
 #sil-anim-timeline .sat-keyframes {
   flex: 1 1 auto;
   background: #444444;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#sil-anim-timeline .sat-keyframes .row {
+  position: relative;
+  margin: 1px 0;
+}
+#sil-anim-timeline .sat-keyframes .row button {
+  width: 8px;
+  height: 8px;
+  position: absolute;
+  top: 0;
+  border-width: 0;
+  display: block;
+  padding: 0;
+  transform: rotate(45deg);
+  background: yellow;
+}
+
+#sil-anim-timeline .sat-kf-button-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #3b3b3b;
+  display: none;
+}
+#sil-anim-timeline .sat-kf-button-overlay h1 {
+  font-size: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 15px;
+  color: #848484;
+  line-height: 17px;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  font-weight: normal;
+}
+#sil-anim-timeline .sat-kf-button-overlay ul {
+  font-size: 10px;
+  position: absolute;
+  top: 15px;
+  left: 0;
+  width: 100%;
+  bottom: 0;
+  color: white;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+#sil-anim-timeline .sat-kf-button-overlay ul li {
+  flex: 1 1 auto;
+  border: 3px solid transparent;
+}
+#sil-anim-timeline .sat-kf-button-overlay ul li:first-child { border-left-width: 6px; }
+#sil-anim-timeline .sat-kf-button-overlay ul li:last-child { border-right-width: 6px; }
+#sil-anim-timeline .sat-kf-button-overlay ul li button {
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: #585858;
+  border-width: 0;
+  background-repeat: no-repeat;
+  background-size: 20%;
+  background-position: 10px center;
+  color: white;
+}
+#sil-anim-timeline .sat-kf-button-overlay ul li button.sat-kf-button-cancel {
+  background-image: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="11 4 10 3 1 12 10 20 11 19 5 13 22 13 22 11 5.41 11 11 4" fill="white"/></svg>');
+}
+#sil-anim-timeline .sat-kf-button-overlay ul li button.sat-kf-button-delete {
+  background-image: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="9" y="8" width="2" height="10" fill="white"/><rect x="13" y="8" width="2" height="10" fill="white"/><path d="M11,2V4H3V6H5V22H19V6h2V4H13V2Zm6,18H7V6H17Z" fill="white"/></svg>');
+}
+#sil-anim-timeline .sat-kf-button-overlay ul li button.sat-kf-button-easing {
+  background-image: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m 2,22 C 22,22 2,2 22,2" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/><line x1="2" y1="2" x2="22" y2="2" stroke="white" stroke-width="0.5" /><line x1="2" y1="22" x2="22" y2="22" stroke="white" stroke-width="0.5" /><circle cx="2" cy="2" r="1.5" stroke="white" stroke-width="0.5" fill="none" /><circle cx="22" cy="22" r="1.5" stroke="white" stroke-width="0.5" fill="none" /></svg>');
 }

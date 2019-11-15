@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Example</title>
+<style>
+html, body { margin: 0; padding: 0; overflow: hidden; }
+svg {
+    width: 100vw;
+    height: 100vh;
+    object-fit: contain;
+}
+</style>
+</head>
+<body>
+$SVG
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.0.1/dist/gsap.min.js"></script>
+<script>
+(() => {
+    const getBBox = element => {
+        /* https://greensock.com/forums/topic/13681-svg-gotchas/page/2/?tab=comments#comment-72060 */
+        var svg = element.ownerSVGElement;
+        if (!svg) { return { x: 0, y: 0, cx: 0, cy: 0, width: 0, height: 0 }; }
+        var r = element.getBBox(); 
+        var p = svg.createSVGPoint(); 
+        var matrix = svg.getScreenCTM().inverse().multiply(element.getScreenCTM()); 
+        p.x = r.x; p.y = r.y; var a = p.matrixTransform(matrix);
+        p.x = r.x + r.width; p.y = r.y; var b = p.matrixTransform(matrix);
+        p.x = r.x + r.width; p.y = r.y + r.height; var c = p.matrixTransform(matrix);
+        p.x = r.x; p.y = r.y + r.height; var d = p.matrixTransform(matrix);
+        var minX = Math.min(a.x, b.x, c.x, d.x);
+        var maxX = Math.max(a.x, b.x, c.x, d.x);
+        var minY = Math.min(a.y, b.y, c.y, d.y);
+        var maxY = Math.max(a.y, b.y, c.y, d.y);
+        var width = maxX - minX;
+        var height = maxY - minY;
+        return { x: minX, y: minY, width: width, height: height,
+                 cx: minX + width / 2, cy: minY + height / 2 };
+    }
+
+    const parseSvgForTimeline = () => {
+        const svg = document.querySelector("svg");
+        const tl = gsap.timeline().pause().repeat(-1);
+        const composition_length = 180; // FIXME
+        tl.set({}, {}, composition_length / 60);
+
+        Array.from(svg.querySelectorAll("[data-keyframes]")).forEach(el => {
+            const bb = getBBox(el);
+            let earliests = {};
+            Object.keys(el.dataset).forEach(attr => {
+                let parts = attr.match(/^keyframe-([0-9]+)(.+)$/);
+                if (parts) {
+                    let frame = parseInt(parts[1], 10);
+                    let propdict = {};
+                    let prop = parts[2].toLowerCase();
+                    let value = parseInt(el.dataset[attr], 10) - bb[prop];
+                    propdict[prop] = value;
+                    if (value < (earliests[prop] || 9999999)) { earliests[prop] = value; }
+                    tl.to(el, propdict, frame / 60);
+                }
+            });
+            tl.set(el, earliests, 0);
+        })
+        return tl;
+    }
+
+    const tl = parseSvgForTimeline();
+    tl.play();
+})()
+</script>
+</body>
+</html>

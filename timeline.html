@@ -2,6 +2,7 @@
   <div class="container">
     <div class="sat-controls">
       <div>
+        <button class="sat-dl">download</button>
       </div>
       <div>
         <button class="sat-record">record</button>
@@ -16,10 +17,20 @@
       <ul>
       </ul>
       <div class="thumb"></div>
-      <input type="range" min="1" max="180" step="1">
+      <input type="range" min="1" max="180" step="1" value="1">
     </div>
     <div class="sat-keyframes">
       
     </div>
   </div>
+
+  <div class="sat-kf-button-overlay">
+    <h1>Frame <output class="sat-kf-frame"></output> for node <output class="sat-kf-nodeid"></output></h1>
+    <ul>
+      <li><button class="sat-kf-button-easing">easing</button></li>
+      <li><button class="sat-kf-button-delete">delete</button></li>
+      <li><button class="sat-kf-button-cancel">cancel</button></li>
+    </ul>
+  </div>
+
 </article>
