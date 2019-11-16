@@ -223,7 +223,7 @@ html, body {
   background: #585858;
   border-width: 0;
   background-repeat: no-repeat;
-  background-size: 20%;
+  background-size: 10% 60%;
   background-position: 10px center;
   color: white;
 }
@@ -235,4 +235,7 @@ html, body {
 }
 #sil-anim-timeline .sat-kf-button-overlay ul li button.sat-kf-button-easing {
   background-image: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m 2,22 C 22,22 2,2 22,2" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/><line x1="2" y1="2" x2="22" y2="2" stroke="white" stroke-width="0.5" /><line x1="2" y1="22" x2="22" y2="22" stroke="white" stroke-width="0.5" /><circle cx="2" cy="2" r="1.5" stroke="white" stroke-width="0.5" fill="none" /><circle cx="22" cy="22" r="1.5" stroke="white" stroke-width="0.5" fill="none" /></svg>');
+}
+#sil-anim-timeline .sat-kf-button-overlay ul li button.sat-kf-button-jump {
+  background-image: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 2 L20 12 L2 22 L2 2 M22 2 L22 22" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" /></svg>');
 }

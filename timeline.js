@@ -15,6 +15,7 @@
         const cnc = tml.querySelector(".sat-kf-button-overlay button.sat-kf-button-cancel");
         const eas = tml.querySelector(".sat-kf-button-overlay button.sat-kf-button-easing");
         const dlt = tml.querySelector(".sat-kf-button-overlay button.sat-kf-button-delete");
+        const jmp = tml.querySelector(".sat-kf-button-overlay button.sat-kf-button-jump");
         const widthOfThumb = 20;
         const widthOfLeftGapBeforeSlider = 3;
         let w = rng.getBoundingClientRect().width - widthOfThumb - widthOfLeftGapBeforeSlider;
@@ -71,6 +72,13 @@
         }, false);
         eas.addEventListener("click", async () => {
             console.log("easing not implemented");
+        }, false);
+        jmp.addEventListener("click", async () => {
+            window.parent.postMessage({
+                action: "jump",
+                frame: ovl.dataset.frame,
+                node_id: ovl.dataset.node_id
+            }, "*");
         }, false);
         dlt.addEventListener("click", async () => {
             window.parent.postMessage({

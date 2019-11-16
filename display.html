@@ -53,16 +53,14 @@ $SVG
                     let frame = parseInt(parts[1], 10);
                     let propdict = {};
                     let prop = parts[2].toLowerCase();
-                    let value = parseInt(el.dataset[attr], 10) - bb[prop];
+                    let value = parseInt(el.dataset[attr], 10) - (bb[prop] || 0);
                     propdict[prop] = value;
                     if (!allframesprops[frame]) allframesprops[frame] = {};
                     allframesprops[frame][prop] = value;
-                    //tl.to(el, propdict, frame / 60);
                 }
             });
             let keyframes = Object.keys(allframesprops).map(n => parseInt(n, 10));
             keyframes.sort((a, b) => a - b);
-            console.log(el.id, keyframes);
             // set all props at 0 to the way the first frame is
             tl.set(el, allframesprops[keyframes[0]], 0);
             for (let fr=1; fr < keyframes.length; fr++) {

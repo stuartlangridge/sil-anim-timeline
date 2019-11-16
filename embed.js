@@ -7,7 +7,7 @@ window.silAnimTimelineTerminate = (function() {
     const TIMELINE_JS = ``;
     const DISPLAY_HTML = ``;
 
-    const KEYFRAMABLE_PROPERTIES = new Set(["x", "y"]);
+    const KEYFRAMABLE_PROPERTIES = new Set(["x", "y", "rotation"]);
 
     let timelineWindow;
 
@@ -105,6 +105,7 @@ window.silAnimTimelineTerminate = (function() {
             let svgel = doc.getElementById(calculated_svgname);
             if (!svgel) { continue; }
             let figmanode = mapping[calculated_svgname];
+            svgel.setAttribute("data-figma-nodeid", figmanode.id);
             let keyframe_data = figmanode.getSharedPluginData("silanimtimeline", "keyframe-data");
             if (!keyframe_data) {
                 keyframe_data = {}
@@ -216,6 +217,23 @@ window.silAnimTimelineTerminate = (function() {
         selectionchange(); // to update the timeline
     }
 
+    const jump = (frame, node_id) => {
+        let s = window.figma.getNodeById(node_id);
+        if (!s) { console.log("Jumping for a non-existent node", node_id); return; }
+        let existing_keyframe_data = s.getSharedPluginData("silanimtimeline", "keyframe-data");
+        if (!existing_keyframe_data) {
+            // shouldn't happen
+            existing_keyframe_data = {}
+        } else {
+            existing_keyframe_data = JSON.parse(existing_keyframe_data);
+        }
+        let requested_frame = existing_keyframe_data[frame];
+        if (!requested_frame) { console.log("Jumping for a non-existent keyframe", node_id, frame); return; }
+        for (let k in requested_frame) {
+            s[k] = requested_frame[k];
+        }
+    }
+
     const messageHandler = event => {
         if (event.data.action == "play-button") {
             playPressed();
@@ -225,6 +243,8 @@ window.silAnimTimelineTerminate = (function() {
             downloadPressed();
         } else if (event.data.action == "delete-keyframe") {
             deleteKeyframe(event.data.frame, event.data.node_id);
+        } else if (event.data.action == "jump") {
+            jump(event.data.frame, event.data.node_id);
         } else {
             console.log("unrecognised event in embed", event.data);
         }
