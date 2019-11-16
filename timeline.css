@@ -128,6 +128,14 @@ html, body {
   top: 0;
   z-index: -1;
 }
+#sil-anim-timeline .sat-numbers .thumb.dragger {
+  background: #53bf76;
+  display: none;
+}
+#sil-anim-timeline .sat-numbers .thumb.dragger::after {
+  border-left-color: #53bf76;
+}
+
 #sil-anim-timeline .sat-numbers ul {
   font-size: 10px;
   font-family: sans-serif;

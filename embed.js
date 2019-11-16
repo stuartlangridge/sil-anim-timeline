@@ -217,6 +217,22 @@ window.silAnimTimelineTerminate = (function() {
         selectionchange(); // to update the timeline
     }
 
+    const moveKeyframe = (frame_before, frame_after, node_id) => {
+        let s = window.figma.getNodeById(node_id);
+        if (!s) { console.log("Moving a keyframe for a non-existent node", node_id); return; }
+        let existing_keyframe_data = s.getSharedPluginData("silanimtimeline", "keyframe-data");
+        if (!existing_keyframe_data) {
+            // shouldn't happen
+            existing_keyframe_data = {}
+        } else {
+            existing_keyframe_data = JSON.parse(existing_keyframe_data);
+        }
+        existing_keyframe_data[frame_after] = Object.assign({}, existing_keyframe_data[frame_before]);
+        delete existing_keyframe_data[frame_before];
+        s.setSharedPluginData("silanimtimeline", "keyframe-data", JSON.stringify(existing_keyframe_data));
+        selectionchange(); // to update the timeline
+    }
+
     const jump = (frame, node_id) => {
         let s = window.figma.getNodeById(node_id);
         if (!s) { console.log("Jumping for a non-existent node", node_id); return; }
@@ -243,6 +259,8 @@ window.silAnimTimelineTerminate = (function() {
             downloadPressed();
         } else if (event.data.action == "delete-keyframe") {
             deleteKeyframe(event.data.frame, event.data.node_id);
+        } else if (event.data.action == "move-keyframe") {
+            moveKeyframe(event.data.frame_before, event.data.frame_after, event.data.node_id);
         } else if (event.data.action == "jump") {
             jump(event.data.frame, event.data.node_id);
         } else {

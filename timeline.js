@@ -101,6 +101,7 @@
             row.dataset.figmaId = figma_id;
             document.querySelector("#sil-anim-timeline .sat-keyframes").appendChild(row);
         }
+        /* button click */
         let kf = document.createElement("button");
         kf.onclick = () => {
             const ovl = document.querySelector(".sat-kf-button-overlay");
@@ -108,8 +109,58 @@
             ovl.dataset.node_id = figma_id;
             ovl.style.display = "block";
         }
+        /* button position */
         let xpos_pc = ((frame / composition_length) * 100);
         kf.style.left = xpos_pc + "%";
+        /* button move */
+
+        let dragging = false;
+        let dragStartX, dragNowX, row_bounds, button_bounds;
+        const thumbDragger = document.querySelector("#sil-anim-timeline .sat-numbers .thumb.dragger");
+        const mm = e => {
+            dragNowX = e.pageX;
+            if (Math.abs(dragNowX - dragStartX) > 5) {
+                let nx = button_bounds.x + dragNowX - dragStartX;
+                if (nx > row_bounds.width) nx = row_bounds.width;
+                if (nx < 0) nx = 0;
+                let dnx = nx - button_bounds.x;
+                kf.style.transform = "translateX(" + dnx + "px)";
+                thumbDragger.style.transform = "translateX(" + dnx + "px)";
+                let frame = Math.round((nx / row_bounds.width) * composition_length);
+                thumbDragger.innerHTML = frame;
+                thumbDragger.style.display = "flex";
+            }
+        }
+        const mu = e => {
+            dragNowX = e.pageX;
+            if (Math.abs(dragNowX - dragStartX) > 5) {
+                let dest_frame = parseInt(thumbDragger.innerHTML, 10);
+                console.log("frame is", dest_frame);
+                e.preventDefault();
+                window.parent.postMessage({
+                    action: "move-keyframe",
+                    frame_before: frame,
+                    frame_after: dest_frame,
+                    node_id: figma_id
+                }, "*");
+            }
+            document.removeEventListener("mousemove", mm, false);
+            document.removeEventListener("mouseup", mu, false);
+            thumbDragger.style.display = "none";
+            kf.style.transform = "";
+            kf.style.opacity = 1;
+        }
+        kf.onmousedown = e => {
+            dragging = true;
+            dragStartX = e.pageX;
+            dragNowX = e.pageX;
+            document.addEventListener("mousemove", mm, false);
+            document.addEventListener("mouseup", mu, false);
+            row_bounds = row.getBoundingClientRect();
+            button_bounds = kf.getBoundingClientRect();
+            kf.style.opacity = 0.5;
+            thumbDragger.style.left = (button_bounds.x - 5) + "px";
+        }
         row.appendChild(kf);
     }
 
