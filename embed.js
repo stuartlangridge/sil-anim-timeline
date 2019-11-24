@@ -7,7 +7,7 @@ window.silAnimTimelineTerminate = (function() {
     const TIMELINE_JS = ``;
     const DISPLAY_HTML = ``;
 
-    const KEYFRAMABLE_PROPERTIES = new Set(["x", "y", "rotation"]);
+    const KEYFRAMABLE_PROPERTIES = new Set(["x", "y", "rotation", "opacity"]);
 
     let timelineWindow;
 
