@@ -163,6 +163,7 @@ html, body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  margin: 0 10px;  /* l/r margin half the width of the thumb */
 }
 
 #sil-anim-timeline .sat-keyframes .row {

@@ -104,6 +104,7 @@
         /* button click */
         let kf = document.createElement("button");
         kf.onclick = () => {
+            if (dragging) return;
             const ovl = document.querySelector(".sat-kf-button-overlay");
             ovl.dataset.frame = frame;
             ovl.dataset.node_id = figma_id;
@@ -120,6 +121,7 @@
         const mm = e => {
             dragNowX = e.pageX;
             if (Math.abs(dragNowX - dragStartX) > 5) {
+                dragging = true;
                 let nx = button_bounds.x + dragNowX - dragStartX;
                 if (nx > row_bounds.width) nx = row_bounds.width;
                 if (nx < 0) nx = 0;
@@ -149,9 +151,9 @@
             thumbDragger.style.display = "none";
             kf.style.transform = "";
             kf.style.opacity = 1;
+            setTimeout(() => { dragging = false; }, 150); // click will fire while still true so can ignore
         }
         kf.onmousedown = e => {
-            dragging = true;
             dragStartX = e.pageX;
             dragNowX = e.pageX;
             document.addEventListener("mousemove", mm, false);
